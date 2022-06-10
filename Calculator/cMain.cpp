@@ -1,15 +1,17 @@
 #include "cMain.h"
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
+
 EVT_BUTTON(wxID_ANY, OnButtonClicked)
+
 wxEND_EVENT_TABLE()
 
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(240, 410)){
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(240, 410)) {
 
 	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 
 	text = new wxTextCtrl(this, wxID_ANY, "", wxPoint(10, 10), wxSize(200, 100));
-	
+
 	//row 1
 	btn = new wxButton(this, 15, "%", wxPoint(160, 110), wxSize(50, 50)); // %
 	btn = new wxButton(this, 17, "bin", wxPoint(60, 110), wxSize(50, 50)); // bin
@@ -23,9 +25,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	btn = new wxButton(this, 14, "/", wxPoint(160, 160), wxSize(50, 50)); // /
 
 	//row 3
-	btn = new wxButton (this, 4, "4", wxPoint(10, 210), wxSize(50, 50)); //4
-	btn = new wxButton (this, 5, "5", wxPoint(60, 210), wxSize(50, 50)); //5
-	btn = new wxButton (this, 6, "6", wxPoint(110, 210), wxSize(50, 50)); //6
+	btn = new wxButton(this, 4, "4", wxPoint(10, 210), wxSize(50, 50)); //4
+	btn = new wxButton(this, 5, "5", wxPoint(60, 210), wxSize(50, 50)); //5
+	btn = new wxButton(this, 6, "6", wxPoint(110, 210), wxSize(50, 50)); //6
 	btn = new wxButton(this, 13, "*", wxPoint(160, 210), wxSize(50, 50)); //*
 
 	//row 4
@@ -35,20 +37,26 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	btn = new wxButton(this, 12, "-", wxPoint(160, 260), wxSize(50, 50)); //-	
 
 	//row 5
-	btn = new wxButton(this, 16, "C", wxPoint(10, 310), wxSize(50, 50)); // clear
-	btn = new wxButton (this, 10, "0", wxPoint(60, 310), wxSize(50, 50)); //0
-	btn = new wxButton(this, 20, "=", wxPoint(110, 310), wxSize(50, 50)); //=
+	btn = new wxButton(this, 20, "C", wxPoint(10, 310), wxSize(50, 50)); // clear
+	btn = new wxButton(this, 10, "0", wxPoint(60, 310), wxSize(50, 50)); //0
+	btn = new wxButton(this, 16, "=", wxPoint(110, 310), wxSize(50, 50)); //=
 	btn = new wxButton(this, 11, "+", wxPoint(160, 310), wxSize(50, 50)); //+
 
 
-	
+
 }
 cMain::~cMain() {
 	delete[]btn;
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt) {
-	wxButton* onBtn = dynamic_cast<wxButton*>(evt.GetEventObject());
-	wxString output = onBtn->GetLabel();
-	text->AppendText(output);
+	int id = evt.GetId();
+	if (id < 20) {
+		wxButton* onBtn = dynamic_cast<wxButton*>(evt.GetEventObject());
+		wxString output = onBtn->GetLabel();
+		text->AppendText(output);
+	}
+	else {
+		text->Clear();
+	}
 }
