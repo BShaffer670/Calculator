@@ -1,12 +1,12 @@
 #pragma once
 #include "wx/wx.h"
+//#include "ButtonFactory.h"
 
 class cMain : public wxFrame
 {
 public:
 	cMain();
 	~cMain();
-private:
 	wxButton* btn = nullptr;
 	wxTextCtrl* text = nullptr;
 public:
