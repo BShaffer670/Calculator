@@ -11,7 +11,6 @@ public:
 	ButtonFactory();
 	~ButtonFactory();
 
-	wxButton* MakeButton(cMain* _frame, int _id, wxString _label, int x, int y);
-	wxButton* ClearButton(cMain* _frame);
+	wxButton* MakeButton(cMain* _frame, int _id, wxString _label, int xPos, int yPos);
 };
 

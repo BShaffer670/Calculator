@@ -34,7 +34,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	btn = factory.MakeButton(this, 17, "bin", 60, 110); //Bin
 	btn = factory.MakeButton(this, 18, "hex", 110, 110); //Hex
 	btn = factory.MakeButton(this, 19, "dec", 10, 110); //Dec
-	btn = factory.ClearButton(this); //Clear
+	btn = factory.MakeButton(this, 20 , "C", 10, 310); //Clear
 	
 	
 
