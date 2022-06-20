@@ -1,6 +1,7 @@
 #include "cMain.h"
 #include"ButtonFactory.h"
 #include "CalculatorProcessor.h"
+#include "ICommands.h"
 #include <string>
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
@@ -11,9 +12,10 @@ wxEND_EVENT_TABLE()
 
 wxString output;
 int num2;
-char op = ' ';
 
 CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
+
+ICommands equation;
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(240, 410)) {
 
@@ -62,36 +64,42 @@ void cMain::OnButtonClicked(wxCommandEvent& evt) {
 	}
 	else if(id == 11){
 		text->Clear();
-		processor->SetBaseNumber(wxAtoi(output));
+		//processor->SetBaseNumber(wxAtoi(output));
+		equation.nums.push_back(wxAtoi(output));
 		output = "";
-		op = '+';
+		equation.commands.push_back('+');
 	}
 	else if (id == 12) {
 		text->Clear();
-		processor->SetBaseNumber(wxAtoi(output));
+		//processor->SetBaseNumber(wxAtoi(output));
+		equation.nums.push_back(wxAtoi(output));
 		output = "";
-		op = '-';
+		equation.commands.push_back('-');
 	}
 	else if (id == 13) {
 		text->Clear();
-		processor->SetBaseNumber(wxAtoi(output));
+		//processor->SetBaseNumber(wxAtoi(output));
+		equation.nums.push_back(wxAtoi(output));
 		output = "";
-		op = '*';
+		equation.commands.push_back('*');
 	}
 	else if (id == 14) {
 		text->Clear();
-		processor->SetBaseNumber(wxAtoi(output));
+		//processor->SetBaseNumber(wxAtoi(output));
+		equation.nums.push_back(wxAtoi(output));
 		output = "";
-		op = '/';
+		equation.commands.push_back('/');
 	}
 	else if (id == 15) {
 		text->Clear();
-		processor->SetBaseNumber(wxAtoi(output));
+		//processor->SetBaseNumber(wxAtoi(output));
+		equation.nums.push_back(wxAtoi(output));
 		output = "";
-		op = '%';
+		equation.commands.push_back('%');
 	}
 	else if (id == 16) {
-		if (op == '+') {
+		equation.nums.push_back(wxAtoi(output));
+		/*if (op == '+') {
 			processor->Add(wxAtoi(output));
 		}
 		else if (op == '-') {
@@ -105,10 +113,14 @@ void cMain::OnButtonClicked(wxCommandEvent& evt) {
 		}
 		else if (op == '%') {
 			processor->Modulus(wxAtoi(output));
-		}
-		op = ' ';
+		}*/
+
 		text->Clear();
-		text->AppendText(processor->GetDecimal());
+		output = "";
+		output = equation.Execute();
+		text->AppendText(output);
+		equation.commands.clear();
+		equation.nums.clear();
 	}
 	else if (id == 17) {
 		output = "";
