@@ -1,11 +1,19 @@
 #include "cMain.h"
-#include "ButtonFactory.h"
+#include"ButtonFactory.h"
+#include "CalculatorProcessor.h"
+#include <string>
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 
 EVT_BUTTON(wxID_ANY, OnButtonClicked)
 
 wxEND_EVENT_TABLE()
+
+wxString output;
+int num2;
+char op = ' ';
+
+CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(240, 410)) {
 
@@ -44,13 +52,85 @@ cMain::~cMain() {
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt) {
+
+	wxButton* onBtn = dynamic_cast<wxButton*>(evt.GetEventObject());
+
 	int id = evt.GetId();
-	if (id < 20) {
-		wxButton* onBtn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		wxString output = onBtn->GetLabel();
+	if (id < 11) {
+		output += onBtn->GetLabel();
+		text->AppendText(onBtn->GetLabel());		
+	}
+	else if(id == 11){
+		text->Clear();
+		processor->SetBaseNumber(wxAtoi(output));
+		output = "";
+		op = '+';
+	}
+	else if (id == 12) {
+		text->Clear();
+		processor->SetBaseNumber(wxAtoi(output));
+		output = "";
+		op = '-';
+	}
+	else if (id == 13) {
+		text->Clear();
+		processor->SetBaseNumber(wxAtoi(output));
+		output = "";
+		op = '*';
+	}
+	else if (id == 14) {
+		text->Clear();
+		processor->SetBaseNumber(wxAtoi(output));
+		output = "";
+		op = '/';
+	}
+	else if (id == 15) {
+		text->Clear();
+		processor->SetBaseNumber(wxAtoi(output));
+		output = "";
+		op = '%';
+	}
+	else if (id == 16) {
+		if (op == '+') {
+			processor->Add(wxAtoi(output));
+		}
+		else if (op == '-') {
+			processor->Subtract(wxAtoi(output));
+		}
+		else if (op == '*') {
+			processor->Multiply(wxAtoi(output));
+		}
+		else if (op == '/') {
+			processor->Divide(wxAtoi(output));
+		}
+		else if (op == '%') {
+			processor->Modulus(wxAtoi(output));
+		}
+		op = ' ';
+		text->Clear();
+		text->AppendText(processor->GetDecimal());
+	}
+	else if (id == 17) {
+		output = "";
+		output = processor->GetBinary();
+		text->Clear();
+		text->AppendText(output);
+	}
+	else if (id == 18) {
+		output = "";
+		output = processor->GetHexadecimal();
+		text->Clear();
+		text->AppendText(output);
+	}
+	else if (id == 19) {
+		output = "";
+		output = processor->GetDecimal();
+		text->Clear();
 		text->AppendText(output);
 	}
 	else {
 		text->Clear();
+		processor->SetBaseNumber(0);
+		output = "";
 	}
 }
