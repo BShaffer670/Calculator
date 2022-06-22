@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Calculator\CalculatorProcessor.cpp" />
     <ClCompile Include="ButtonFactoryTest.cpp" />
     <ClCompile Include="CalculatorTest.cpp" />
     <ClCompile Include="pch.cpp">
